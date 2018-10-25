@@ -2,7 +2,7 @@
 
 Fetaste julkalenderbidraget
 
-##Kom igång
+## Kom igång
 [Installera Node](https://nodejs.org/en/).
 Installera/Uppdatera node modulerna och starta den lokala servern. Hitta vad du ska göra via trello.
 ````
