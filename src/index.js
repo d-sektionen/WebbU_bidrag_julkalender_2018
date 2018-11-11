@@ -1,19 +1,17 @@
 import './main.sass';
+import Manager from './Manager';
 
-var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+const game = new Phaser.Game(1920, 1080, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
 function preload() {
-    console.log("asdasd");
-    game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-    game.scale.pageAlignHorizontally = true;
-    game.scale.pageAlignVertically = true;
-    game.load.image('star', require('./star.png'));
+    Manager.preload(game);
 }
 
 function create() {
-    game.add.sprite(0, 0, 'star');
+    Manager.create();
 }
 
 function update() {
-
+    Manager.update();
 }
+
