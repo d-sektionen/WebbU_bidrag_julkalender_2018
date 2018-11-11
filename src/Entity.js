@@ -1,10 +1,9 @@
-class Entity {
-    _container;
-    _game;
+import Manager from './Manager';
 
-    constructor (game) {
-        this._container = game.add.group();
-        this._game = game;
+class Entity {
+    constructor () {
+        this._container = Manager.game.add.group();
+        this._game = Manager.game;
     }
 
     get container () {
