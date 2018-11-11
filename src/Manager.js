@@ -6,12 +6,16 @@ class Manager {
     }
 
     static create (game) {
+        if(!!this._initModules === false)
+            return false;
         for(var i = 0;this._initModules[i];i++) {
             this._initModules[i].init();
         }
     }
 
     static update (game) {
+        if(!!this._updateModules === false)
+            return false;
         for(var i = 0;this._updateModules[i];i++) {
             this._updateModules[i].init();
         }
