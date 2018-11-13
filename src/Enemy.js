@@ -20,4 +20,5 @@ class Enemy extends Entity{
     }
 }
 
+
 export default Enemy;
