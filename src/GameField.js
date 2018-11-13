@@ -1,14 +1,16 @@
 import Entity from "./Entity";
 import Manager from './Manager';
 
-class GameField extends Entity {
+class GameField {
 
     constructor () {
-        super();
+
     }
 
     init () {
-        Manager.game.add.tileSprite(0, 0, 1920, 1080, 'background');
+        this.background = Manager.game.add.sprite(0, 0, 'background');
+        this.background.width = Manager.game.width;
+        this.background.height = Manager.game.height;
         this._field = Manager.game.add.sprite();
     }
 }
