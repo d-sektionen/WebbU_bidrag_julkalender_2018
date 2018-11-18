@@ -12,7 +12,7 @@ class Projectile {
         let deg = rad * (180 / Math.PI)
         this._proj.angle = deg
 
-        Controller.onUpdate(this.update.bind(this));
+        console.log("projectile update id: " + Controller.onUpdate(this.update.bind(this)));
     }
 
     static preload () {

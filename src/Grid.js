@@ -1,52 +1,51 @@
 import Controller from "./Controller";
 import Config from "./Config";
+import Tower from "./Modules/Towers/Tower";
 
 class Grid {
     constructor () {
-        // A grid of 32x16 squares
+        // A grid of 16x8 squares
         this._grid = [
-            new Array(16),
-            new Array(16),
-            new Array(16),
-            new Array(16),
-            new Array(16),
-            new Array(16),
-            new Array(16),
-            new Array(16),
-            new Array(16),
-            new Array(16),
-            new Array(16),
-            new Array(16),
-            new Array(16),
-            new Array(16),
-            new Array(16),
-            new Array(16),
-            new Array(16),
-            new Array(16),
-            new Array(16),
-            new Array(16),
-            new Array(16),
-            new Array(16),
-            new Array(16),
-            new Array(16),
-            new Array(16),
-            new Array(16),
-            new Array(16),
-            new Array(16),
-            new Array(16),
-            new Array(16),
-            new Array(16),
-            new Array(16)
+            new Array(8),
+            new Array(8),
+            new Array(8),
+            new Array(8),
+            new Array(8),
+            new Array(8),
+            new Array(8),
+            new Array(8),
+            new Array(8),
+            new Array(8),
+            new Array(8),
+            new Array(8),
+            new Array(8),
+            new Array(8),
+            new Array(8),
+            new Array(8)
         ];
+
+        this._grid[0][0] = {tower: "", sprite: ""};
 
         Controller.onMouseMove(this.mouseMove.bind(this));
         Controller.onMouseDown(this.down.bind(this));
+        this._selectedTower = Tower;
     }
 
+    get selectedTower () {
+        return this._selectedTower;
+    }
+
+    get active () {
+        return !!this._selectedTower;
+    }
+
+
+
     mouseMove (x,y) {
-        if(!!this.graphics === false)
-            this.graphics = Controller.game.add.graphics(0, 0);
-        this.graphics.clear();
+        if(!this.active)
+            return false;
+        if(!!this.floating)
+            this.floating.destroy();
         this.currentX = 0;
         for(let i = 0;this._grid.length > 0;i++) {
             if(x <= Config.width/this._grid.length)
@@ -65,15 +64,31 @@ class Grid {
             }
             y -= Config.height/this._grid[0].length;
         }
-        // draw a rectangle
-        this.graphics.lineStyle(2, 0x0000FF, 1);
-        this.graphics.drawRect(this.currentX*Config.width/this._grid.length, this.currentY*Config.height/this._grid[0].length, Config.width/this._grid.length, Config.height/this._grid[0].length);
+        if(typeof this._grid[this.currentX][this.currentY] !== "undefined") {
+            return false;
+        }
+
+
+        this.floating = Controller.game.add.sprite(this.currentX*Config.width/this._grid.length + (Config.width/this._grid.length/2), this.currentY*Config.height/this._grid[0].length + (Config.height/this._grid[0].length/2), Tower.getSprite());
+        this.floating.anchor.setTo(0.5, 0.5);
+        this.floating.alpha = 0.5;
     }
 
     down () {
-        let test = Controller.game.add.graphics(0, 0);
-        test.lineStyle(2, 0xFF0000, 1);
-        test.drawRect(this.currentX*Config.width/this._grid.length, this.currentY*Config.height/this._grid[0].length, Config.width/this._grid.length, Config.height/this._grid[0].length);
+        if(typeof this._grid[this.currentX][this.currentY] !== "undefined") {
+            console.error("Already occupied!");
+            return false;
+        }
+        if(this.selectedTower.purchase() === false) {
+            console.error("cannot buy!");
+            return false;
+        }
+        this.add(this.currentX, this.currentY, this._selectedTower);
+        this._grid[this.currentX][this.currentY] = new this._selectedTower(this.currentX * Config.width / this._grid.length + (Config.width/this._grid.length/2), this.currentY * Config.height / this._grid[0].length + (Config.height/this._grid[0].length/2), Tower.getSprite());
+    }
+
+    add (x, y, item) {
+        this._grid[x][y] = new item(x * Config.width / this._grid.length + (Config.width/this._grid.length/2), y * Config.height / this._grid[0].length + (Config.height/this._grid[0].length/2));
     }
 
 
@@ -84,7 +99,11 @@ class Grid {
     }
 
     selectTower (tower) {
+        this._selectedTower = tower;
+    }
 
+    deselectTower () {
+        this._selectedTower = false;
     }
 
     create () {

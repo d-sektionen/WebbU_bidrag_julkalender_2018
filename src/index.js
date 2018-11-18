@@ -4,10 +4,12 @@ import GameField from "./Modules/GameField";
 import Projectile from "./Modules/Projectiles/Projectile";
 import Grid from "./Grid";
 import Config from "./Config";
+import Tower from "./Modules/Towers/Tower";
 
 Controller.onPreload([
     GameField.instance.preload,
-    Projectile.preload
+    Projectile.preload,
+    Tower.preload,
 ]);
 
 Controller.onCreate([

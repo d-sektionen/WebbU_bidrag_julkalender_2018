@@ -21,7 +21,7 @@ class Controller {
     };
 
     static onMouseMove (value) {
-        if(!!Controller._counter === false)
+        if(typeof Controller._counter === "undefined")
             Controller._counter = 0;
         else
             Controller._counter++;
@@ -41,7 +41,7 @@ class Controller {
     }
 
     static onMouseDown (value) {
-        if(!!Controller._counter === false)
+        if(typeof Controller._counter === "undefined")
             Controller._counter = 0;
         else
             Controller._counter++;
@@ -61,7 +61,7 @@ class Controller {
     }
 
     static onUpdate (value) {
-        if(!!Controller._counter === false)
+        if(typeof Controller._counter === "undefined")
             Controller._counter = 0;
         else
             Controller._counter++;
