@@ -1,19 +1,18 @@
 import './main.sass';
+import Controller from "./Controller";
+import GameField from "./Modules/GameField";
+import Projectile from "./Modules/Projectiles/Projectile";
+import Grid from "./Grid";
+import Config from "./Config";
 
-var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+Controller.onPreload([
+    GameField.instance.preload,
+    Projectile.preload
+]);
 
-function preload() {
-    console.log("asdasd");
-    game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-    game.scale.pageAlignHorizontally = true;
-    game.scale.pageAlignVertically = true;
-    game.load.image('star', require('./star.png'));
-}
+Controller.onCreate([
+    GameField.instance.create,
+    Grid.instance.create
+]);
 
-function create() {
-    game.add.sprite(0, 0, 'star');
-}
-
-function update() {
-
-}
+Controller.game = new Phaser.Game(Config.width, Config.height, Phaser.AUTO, '', { preload: Controller.preload, create: Controller.create, update: Controller.update });
