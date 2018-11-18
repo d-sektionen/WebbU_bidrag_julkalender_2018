@@ -16,3 +16,4 @@ Controller.onCreate([
 ]);
 
 Controller.game = new Phaser.Game(Config.width, Config.height, Phaser.AUTO, '', { preload: Controller.preload, create: Controller.create, update: Controller.update });
+
