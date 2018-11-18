@@ -88,7 +88,9 @@ class Grid {
     }
 
     add (x, y, item) {
-        this._grid[x][y] = new item(x * Config.width / this._grid.length + (Config.width/this._grid.length/2), y * Config.height / this._grid[0].length + (Config.height/this._grid[0].length/2));
+        //this._grid[x][y] = new item(x * Config.width / this._grid.length + (Config.width/this._grid.length/2), y * Config.height / this._grid[0].length + (Config.height/this._grid[0].length/2));
+        console.log(this._grid);
+        this._grid[x][y] = item;
     }
 
 

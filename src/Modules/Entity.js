@@ -1,7 +1,10 @@
 import Controller from "../Controller";
 
 class Entity {
-    constructor () {
+    constructor (x, y) {
+        this.x = x;
+        this.y = y;
+
         console.log("ENTITY!")
     }
 
