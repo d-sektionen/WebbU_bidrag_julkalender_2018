@@ -75,6 +75,10 @@ class Controller {
         return Controller._update;
     };
 
+    static removeUpdate (id) {
+        delete Controller._update[id];
+    }
+
     static set game (game) {
         Controller._game = game;
     }

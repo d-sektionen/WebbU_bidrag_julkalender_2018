@@ -14,7 +14,6 @@ class GameField extends Entity {
 
     create () {
         Controller.game.add.image(Controller.game.world.centerX, Controller.game.world.centerY, 'background').anchor.set(0.5);
-        new Projectile(1,0.5);
     }
 
     update () {

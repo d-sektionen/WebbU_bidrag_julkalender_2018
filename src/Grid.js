@@ -24,12 +24,12 @@ class Grid {
             new Array(8)
         ];
 
-        this._grid[0][0] = {tower: "", sprite: ""};
 
         Controller.onMouseMove(this.mouseMove.bind(this));
         Controller.onMouseDown(this.down.bind(this));
         this._selectedTower = Tower;
     }
+
 
     get selectedTower () {
         return this._selectedTower;
@@ -38,11 +38,12 @@ class Grid {
     get active () {
         return !!this._selectedTower;
     }
+    
 
 
 
     mouseMove (x,y) {
-        if(!this.active)
+        if(!this.active || y > Config.heightField)
             return false;
         if(!!this.floating)
             this.floating.destroy();
@@ -57,19 +58,19 @@ class Grid {
         }
         this.currentY = 0;
         for(let i = 0;this._grid[0].length > 0;i++) {
-            if(y <= Config.height/this._grid[0].length)
+            if(y <= Config.heightField/this._grid[0].length)
             {
                 this.currentY = i;
                 break;
             }
-            y -= Config.height/this._grid[0].length;
+            y -= Config.heightField/this._grid[0].length;
         }
         if(typeof this._grid[this.currentX][this.currentY] !== "undefined") {
             return false;
         }
 
 
-        this.floating = Controller.game.add.sprite(this.currentX*Config.width/this._grid.length + (Config.width/this._grid.length/2), this.currentY*Config.height/this._grid[0].length + (Config.height/this._grid[0].length/2), Tower.getSprite());
+        this.floating = Controller.game.add.sprite(this.currentX*Config.width/this._grid.length + (Config.width/this._grid.length/2), this.currentY*Config.heightField/this._grid[0].length + (Config.heightField/this._grid[0].length/2), Tower.getSprite());
         this.floating.anchor.setTo(0.5, 0.5);
         this.floating.alpha = 0.5;
     }
@@ -84,11 +85,13 @@ class Grid {
             return false;
         }
         this.add(this.currentX, this.currentY, this._selectedTower);
-        this._grid[this.currentX][this.currentY] = new this._selectedTower(this.currentX * Config.width / this._grid.length + (Config.width/this._grid.length/2), this.currentY * Config.height / this._grid[0].length + (Config.height/this._grid[0].length/2), Tower.getSprite());
+        this._grid[this.currentX][this.currentY] = new this._selectedTower(this.currentX * Config.width / this._grid.length + (Config.width/this._grid.length/2), this.currentY * Config.heightField / this._grid[0].length + (Config.heightField/this._grid[0].length/2), Tower.getSprite());
+        this._selectedTower = false;
+        this.floating.destroy();
     }
 
     add (x, y, item) {
-        this._grid[x][y] = new item(x * Config.width / this._grid.length + (Config.width/this._grid.length/2), y * Config.height / this._grid[0].length + (Config.height/this._grid[0].length/2));
+        this._grid[x][y] = new item(x * Config.width / this._grid.length + (Config.width/this._grid.length/2), y * Config.heightField / this._grid[0].length + (Config.heightField/this._grid[0].length/2));
     }
 
 
