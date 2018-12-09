@@ -16,7 +16,7 @@ class Tower extends Entity {
             this.update();
         }.bind(this));
 
-        this._fireRate = 10;
+        this._fireRate = 5;
         this._timeFired = 0;
     }
 
@@ -39,8 +39,8 @@ class Tower extends Entity {
             this._timeFired++;
             return false;
         }
-        new Projectile(this._cannon.angle, this._cannon.x, this._cannon.y);
         this._timeFired = 0;
+        new Projectile(this._cannon.angle, this._cannon.x, this._cannon.y);
     }
 
     track (x,y) {
@@ -57,8 +57,10 @@ class Tower extends Entity {
     }
 
     update () {
-        this.fire();
-        this.track(Minion.getMinion().x, Minion.getMinion().y)
+        if(Object.keys(Minion.getMinions()).length > 0) {
+            this.fire();
+            this.track(Minion.getMinions()[Object.keys(Minion.getMinions())[0]].minion.x || 0, Minion.getMinions()[Object.keys(Minion.getMinions())[0]].minion.y || 0);
+        }
     }
 }
 

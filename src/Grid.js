@@ -85,8 +85,7 @@ class Grid {
             return false;
         }
         this.add(this.currentX, this.currentY, this._selectedTower);
-        this._grid[this.currentX][this.currentY] = new this._selectedTower(this.currentX * Config.width / this._grid.length + (Config.width/this._grid.length/2), this.currentY * Config.heightField / this._grid[0].length + (Config.heightField/this._grid[0].length/2), Tower.getSprite());
-        this._selectedTower = false;
+        //this._selectedTower = false;
         this.floating.destroy();
     }
 

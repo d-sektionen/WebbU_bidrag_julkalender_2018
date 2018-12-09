@@ -8,7 +8,6 @@ class GameField extends Entity {
     }
 
     preload () {
-        console.log("preloading")
         Controller.game.load.image('background', require("../res/img/background.png"));
     }
 

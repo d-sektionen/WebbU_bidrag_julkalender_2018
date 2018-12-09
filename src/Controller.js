@@ -1,3 +1,5 @@
+import Minion from "./Modules/Minions/Minion";
+
 class Controller {
     static onPreload (value) {
         if(!!Controller._preload === false)
@@ -113,6 +115,13 @@ class Controller {
                 Controller.createScript[i]();
             }
         }
+        function spawn(i) {
+            new Minion();
+            setTimeout(function () { spawn(i+1) }, 50);
+        }
+        spawn(0);
+        window.addEventListener("click", function() {
+        console.log(Controller._update) }.bind(this))
     }
 
     static update () {
@@ -120,6 +129,7 @@ class Controller {
             return false;
         const keys = Object.keys(Controller._update);
         for(let i = 0;keys[i];i++) {
+            if(typeof Controller._update[keys[i]] === "function")
             Controller._update[keys[i]]();
         }
     }
