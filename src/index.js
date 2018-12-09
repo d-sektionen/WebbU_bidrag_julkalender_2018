@@ -7,6 +7,7 @@ import Config from "./Config";
 import Tower from "./Modules/Towers/Tower";
 import Road from "./Modules/Road";
 //import Directions from "Enum_typ/Direction";
+import Minion from "./Modules/Minions/Minion"
 
 
 const Directions = {
@@ -32,12 +33,13 @@ Controller.onPreload([
     Projectile.preload,
     Tower.preload,
     Road.preload,
+    Minion.preload
 ]);
 
 Controller.onCreate([
     GameField.instance.create,
     Grid.instance.create,
-    addPath
+    Minion.create
 
 ]);
 function createRoad(x, y, dir) {
@@ -53,7 +55,6 @@ function addPath() {
 
 
 }
-
 
 
 Controller.game = new Phaser.Game(Config.width, Config.height, Phaser.AUTO, '', { preload: Controller.preload, create: Controller.create, update: Controller.update });

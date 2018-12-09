@@ -10,9 +10,6 @@ class Tower extends Entity {
         this._cannon = Controller.game.add.sprite(x, y, "basic_tower_cannon");
         this._cannon.anchor.setTo(0.5, 0.5);
 
-        console.log("tower update id: " + Controller.onUpdate(function () {
-        }.bind(this)));
-
         Controller.onMouseMove(function (x,y) {
             this.track(x,y);
         }.bind(this));
