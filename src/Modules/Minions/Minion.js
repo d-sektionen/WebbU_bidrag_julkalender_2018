@@ -1,12 +1,14 @@
 import Entity from "../Entity";
 import Controller from "../../Controller";
-import Config from "../../Config";
-import Tower from "../Towers/Tower";
 
 class Minion extends Entity {
     constructor () {
         super();
 
+    }
+
+    static getMinion () {
+        return this.minion || {x: this.path[this.pi+1000].x, y: this.path[this.pi+1000].x};
     }
 
     static preload () {
@@ -21,8 +23,8 @@ class Minion extends Entity {
         this.pi = 0;
 
         this.points = {
-            'x': [ 0, 1920 ],
-            'y': [ 0, 1080 ]
+            'x': [ 0,276,1212,1920 ],
+            'y': [ 366,880,80,302 ]
         };
 
 
@@ -36,19 +38,16 @@ class Minion extends Entity {
 
 
             this.path.push({x: px, y: py});
-            console.log({x: px, y: py})
         }
 
 
         Controller.onUpdate(Minion.update.bind(this));
+        Minion.getMinion = Minion.getMinion.bind(this);
     }
 
     static update () {
-
-
         this.minion.x = this.path[this.pi].x;
         this.minion.y = this.path[this.pi].y;
-
 
         this.pi+=10;
 

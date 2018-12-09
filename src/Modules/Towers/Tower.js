@@ -1,6 +1,7 @@
 import Entity from "../Entity";
 import Controller from "../../Controller";
 import Projectile from "../Projectiles/Projectile";
+import Minion from "../Minions/Minion";
 
 class Tower extends Entity {
     constructor (x,y) {
@@ -10,11 +11,11 @@ class Tower extends Entity {
         this._cannon = Controller.game.add.sprite(x, y, "basic_tower_cannon");
         this._cannon.anchor.setTo(0.5, 0.5);
 
-        Controller.onMouseMove(function (x,y) {
-            this.track(x,y);
+
+        Controller.onUpdate(function () {
+            this.update();
         }.bind(this));
 
-        Controller.onUpdate(this.update.bind(this));
         this._fireRate = 10;
         this._timeFired = 0;
     }
@@ -57,6 +58,7 @@ class Tower extends Entity {
 
     update () {
         this.fire();
+        this.track(Minion.getMinion().x, Minion.getMinion().y)
     }
 }
 
