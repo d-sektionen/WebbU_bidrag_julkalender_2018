@@ -1,15 +1,50 @@
 import Minion from "./Modules/Minions/Minion";
+import Truck from "./Modules/Minions/Truck";
 
 class Controller {
     static onPreload (value) {
         if(!!Controller._preload === false)
             Controller._preload = [];
         Controller._preload = Controller._preload.concat(value);
+        Controller.money = 200;
+        Controller._lives = 100;
+
+        Controller.spawnRate = 50;
+        Controller.spawnCount = 0;
+        Controller.spawnRateAdd = 0.7;
     };
+
+    static set lives (value) {
+        if(value > 0) {
+            Controller._lives = value;
+        }
+        else {
+
+            let style = { font: "bold 200px Arial", fill: "#a00", boundsAlignH: "center", boundsAlignV: "middle" };
+
+            let text = Controller.game.add.text(0, 0, "GAME OVER", style);
+            text.setTextBounds(0, 0, 1920, 1000);
+            Controller._lives = 0;
+            Controller._update = false;
+            GameBar.lives.setText("Lives: " + Controller.lives);
+        }
+    }
+
+    static get lives () {
+        return Controller._lives || 100;
+    }
 
     static get preloadScript () {
         return Controller._preload;
     };
+
+    static addMoney (value) {
+        Controller.money += value;
+    }
+
+    static removeMoney (value) {
+        Controller.money -= value;
+    }
 
     static onCreate (value) {
         if(!!Controller._create === false)
@@ -63,6 +98,8 @@ class Controller {
     }
 
     static onUpdate (value) {
+        if(Controller._update === false)
+            return false;
         if(typeof Controller._counter === "undefined")
             Controller._counter = 0;
         else
@@ -115,11 +152,6 @@ class Controller {
                 Controller.createScript[i]();
             }
         }
-        function spawn(i) {
-            new Minion();
-            setTimeout(function () { spawn(i+1) }, 50);
-        }
-        spawn(0);
         window.addEventListener("click", function() {
         console.log(Controller._update) }.bind(this))
     }
@@ -127,6 +159,21 @@ class Controller {
     static update () {
         if(!!Controller._update === false)
             return false;
+
+        Controller.spawnRate += Controller.spawnRateAdd;
+        Controller.spawnRateAdd += 0.00001;
+        Controller.spawnCount += Controller.spawnRate / 1000;
+
+        while(Math.ceil(Math.random()*50) < Controller.spawnCount) {
+            if(Controller.spawnCount > 10) {
+                new Truck();
+                Controller.spawnCount -= 10;
+            }
+            else {
+                new Minion();
+                Controller.spawnCount--;
+            }
+        }
         const keys = Object.keys(Controller._update);
         for(let i = 0;keys[i];i++) {
             if(typeof Controller._update[keys[i]] === "function")

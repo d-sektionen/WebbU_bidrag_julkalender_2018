@@ -1,6 +1,7 @@
 import Controller from "../../Controller";
 import Config from "../../Config";
 import Minion from "../Minions/Minion";
+import Truck from "../Minions/Truck";
 
 class Projectile {
     constructor (angle, x, y) {
@@ -32,7 +33,10 @@ class Projectile {
     test (a,b) {
         this._proj.destroy();
         Controller.removeUpdate(this._updateID);
-        Minion.remove(b.tdid);
+        if(Minion.getMinions()[b.tdid].constructor == Minion)
+            Minion.remove(b.tdid);
+        else
+            Truck.remove(b.tdid);
     }
 
     static preload () {

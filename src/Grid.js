@@ -89,8 +89,11 @@ class Grid {
         this.floating.destroy();
     }
 
-    add (x, y, item) {
-        this._grid[x][y] = new item(x * Config.width / this._grid.length + (Config.width/this._grid.length/2), y * Config.heightField / this._grid[0].length + (Config.heightField/this._grid[0].length/2));
+    add (x, y, item, alt) {
+        if(!alt)
+            this._grid[x][y] = new item(x * Config.width / this._grid.length + (Config.width/this._grid.length/2), y * Config.heightField / this._grid[0].length + (Config.heightField/this._grid[0].length/2));
+        else
+            this._grid[x][y] = new item(x * Config.width / this._grid.length + (Config.width/this._grid.length/2), y * Config.heightField / this._grid[0].length + (Config.heightField/this._grid[0].length/2), alt);
     }
 
 

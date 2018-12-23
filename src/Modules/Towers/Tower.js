@@ -16,12 +16,16 @@ class Tower extends Entity {
             this.update();
         }.bind(this));
 
-        this._fireRate = 5;
+        this._fireRate = 7;
         this._timeFired = 0;
     }
 
     static purchase () {
-        return true;
+        if(Controller.money >= 100) {
+            Controller.removeMoney(100);
+            return true;
+        }
+        return false;
     }
 
     static preload () {

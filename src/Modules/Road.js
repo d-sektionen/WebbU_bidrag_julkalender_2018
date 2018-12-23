@@ -10,11 +10,9 @@ class Road extends Entity{
         //straightOrCurve();
         switch(this.dir){
             case Directions.straight.HORIZONTAL:
-                console.log("HOR");
                 this._road = Controller.game.add.sprite(this.x, this.y, "roadstraight");
                 break;
             case Directions.straight.VERTICAL:
-                console.log("VER");
                 let temp = Controller.game.add.sprite(this.x, this.y, "roadstraight");
                 this._road = Controller.game.tween(temp).to({angle : 90}, 0, Phaser.Easing.Linear.None, true);
                 break;
