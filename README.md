@@ -21,3 +21,8 @@ Installera då libpng:
 ````
 brew install libpng
 ````
+
+För att lägga upp på GitHub pages:
+```
+npm run deploy
+```
